@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My first Vue app</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+        <div>
+            文章列表
+        </div>
+        <div>
+            <div v-for="art in articles">{{art.title}}</div>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <div>
+            最近使用过的标签
+        </div>
+        <div>
+            <div v-for="tag in tags_recently">{{tag.name}}</div>
+        </div>
+    </div>
+  </div>
+
+  <script src="./index.js"></script>
+</body>
+</html>
