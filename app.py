@@ -1,18 +1,7 @@
 from bottle import route, run, template, redirect
 from bottle import static_file
+from db import select
 import json
-import sqlite3
-
-db_name = 'blog'
-
-def select(sql):
-    con = sqlite3.connect(db_name)
-    c = con.cursor()
-    c.execute(sql)
-    res = c.fetchall()
-    con.close()
-    return res
-
 
 @route('/static/<filename>')
 def server_static(filename):

@@ -3,12 +3,13 @@
 <head>
   <title>Article</title>
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
 </head>
 <body>
   <div id="app">
     <div>
         <div> {{article.title}} </div>
-        <div> {{article.body}} </div>
+        <div v-html="article.body"> </div>
         <div> {{article.created}} </div>
         <div> {{article.updated}} </div>
         <div> tags: <span v-for="tag in article.tags">{{tag.name}}</span> </div>

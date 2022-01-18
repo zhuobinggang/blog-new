@@ -18,8 +18,12 @@ function json(res){
 }
 
 function load_article(id){
-    fetch(`/ajax-article/id/${id}`, default_get_opt).then(json).then((article) => {
-      app.article = article
+    fetch(`/ajax-article/id/${id}`, default_get_opt).then(json).then((art) => {
+      const c = new showdown.Converter()
+      art.body = c.makeHtml(art.body)
+      return art
+    }).then((art) => {
+      app.article = art
     })
 }
 
