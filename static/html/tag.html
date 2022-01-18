@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tag</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+        <div v-for="art in articles">
+            <a v-bind:href="'./article.html?aid='+ art.id" target="_blank">{{art.title}}<a/>
+            <span v-for="tag in art.tag_names">{{tag.tag_name}}</span>
+        </div>
+    </div>
+  </div>
+
+  <script src="./tag.js"></script>
+</body>
+</html>

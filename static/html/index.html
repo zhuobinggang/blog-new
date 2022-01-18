@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My first Vue app</title>
+  <title>Index</title>
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
 <body>
@@ -11,7 +11,10 @@
             文章列表
         </div>
         <div>
-            <div v-for="art in articles">{{art.title}}</div>
+            <div v-for="art in articles">
+                <a v-bind:href="'./article.html?aid='+ art.id" target="_blank">{{art.title}}<a/>
+                <span v-for="tag in art.tags">{{tag.tag_name}}</span>
+            </div>
         </div>
     </div>
     <hr/>
@@ -20,7 +23,9 @@
             最近使用过的标签
         </div>
         <div>
-            <div v-for="tag in tags_recently">{{tag.name}}</div>
+            <div v-for="tag in tags_recently">
+                <a v-bind:href="'./tag.html?tid='+ tag.tid" target="_blank">{{tag.name}}<a/>
+            </div>
         </div>
     </div>
   </div>

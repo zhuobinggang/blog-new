@@ -35,6 +35,20 @@ function get_tags(page = 1){
     })
 }
 
+function get_tags_recently(){
+    fetch(`/ajax-tags-recently`, default_get_opt).then(json).then((tags) => {
+      dic = {}
+      for(tag of tags){
+        dic[tag['tid']] = tag
+      }
+      tags = []
+      for(key in dic){
+        tags.push(dic[key])
+      }
+      app.tags_recently = tags
+    })
+}
+
 // when refreshed
-app.articles = get_articles(1)
-app.tags_recently = get_tags(1)
+get_articles(1)
+get_tags_recently()
