@@ -1,6 +1,6 @@
 from bottle import route, run, template, redirect
 from bottle import static_file
-from db import select
+from db import select, decompress
 import json
 
 @route('/static/<filename>')
@@ -13,8 +13,8 @@ def index(name):
 
 # (21, 'title_19', 'body_19', '2022-01-17 16:15:10', '2022-01-17 16:15:10', '')
 def article2dic(art):
-    idx, title, body, created, updated, _ = art
-    return {'id': idx, 'title': title, 'body': body, 'created': created, 'updated': updated} 
+    idx, title, created, updated = art
+    return {'id': idx, 'title': title, 'created': created, 'updated': updated} 
 
 def tag2dic(tag):
     idx, name = tag
@@ -38,7 +38,7 @@ def select_from_aid_tag_names(aid_tag_names, art):
 @route('/ajax-articles/page/<page_num>')
 def ajax_articles(page_num):
     limit, offset = default_limit_offset(page_num)
-    arts = select(f'select * from articles order by id desc limit {limit} offset {offset}')
+    arts = select(f'select id, title, created, updated from articles order by id desc limit {limit} offset {offset}')
     arts = [article2dic(art) for art in arts]
     aids = [art['id'] for art in arts]
     aid_tag_names = select(f'select m.aid,t.name,t.id from merge_article_tag as m left join tags as t on m.tid = t.id where m.aid in({number_list_to_sql_in_function_param(aids)})')
@@ -77,6 +77,7 @@ def ajax_article(aid):
     arts = select(f'select id, title, body, created, updated from articles where id = {aid}')
     art = arts[0]
     idx, title, body, created, updated = art
+    body = decompress(body)
     art = {'id': idx, 'title': title, 'body': body, 'created': created, 'updated': updated}
     tags = select(f'select t.id, t.name, m.aid from merge_article_tag as m left join tags as t on m.tid = t.id where m.aid = {idx}')
     tags = [{'tid': tag[0], 'name': tag[1], 'aid': tag[2]} for tag in tags]

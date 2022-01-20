@@ -1,6 +1,8 @@
-from db import insert_article
+from db import insert_article, create_tags_if_not_exist_return_tags, insert_article_with_tids, empty_tables, compress
+from os import walk
 
 def read_markdown_file(name):
+    name = name.strip('.md')
     f = open(f'markdown/{name}.md')
     text = f.read()
     f.close()
@@ -29,6 +31,20 @@ def store_md_to_db(name):
     body = read_markdown_file(name)
     meta = read_meta(body)
     if 'tags' in meta:
-        tags = meta['tags']
-    insert_article(name, body)
+        tag_names = [name.strip() for name in meta['tags']]
+        tags = create_tags_if_not_exist_return_tags(tag_names)
+        tids = [tag['id'] for tag in tags]
+        insert_article_with_tids(name, compress(body), tids)
+    else:
+        insert_article(name, compress(body))
+
+def reload_all_md():
+    empty_tables()
+    mypath = './markdown'
+    filenames = next(walk(mypath), (None, None, []))[2]  # [] if no file
+    filenames = [name.strip('.md') for name in filenames if name.endswith('.md')]
+    for filename in filenames:
+        store_md_to_db(filename)
+
+
 
