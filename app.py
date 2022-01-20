@@ -22,7 +22,7 @@ def tag2dic(tag):
 
 def default_limit_offset(page_num):
     page_num = int(page_num)
-    limit = 10
+    limit = 100
     offset = (page_num - 1) * limit
     return limit, offset
 
@@ -68,7 +68,7 @@ def ajax_tags(page_num):
 
 @route('/ajax-tags-recently')
 def ajax_tags_recently():
-    tags = select(f'select t.id, t.name, m.aid from merge_article_tag as m left join tags as t on m.tid = t.id order by m.id desc limit 10')
+    tags = select(f'select t.id, t.name, m.aid from merge_article_tag as m left join tags as t on m.tid = t.id order by m.id desc limit 100')
     tags = [{'tid':tid, 'name': name, 'aid': aid} for tid, name, aid in tags]
     return json.dumps(tags)
 

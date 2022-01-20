@@ -3,6 +3,7 @@ var app = new Vue({
   data: {
     articles: [],
     tags_recently: [],
+    tag_name: '',
   }
 })
 
@@ -21,3 +22,4 @@ function get_articles_by_tag(tid = 1, page = 1){
 
 let urlParams = new URLSearchParams(window.location.search);
 get_articles_by_tag(urlParams.get('tid'))
+app.tag_name = urlParams.get('name')

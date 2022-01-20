@@ -4,15 +4,20 @@
   <title>Article</title>
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
   <div id="app">
-    <div>
-        <div> {{article.title}} </div>
-        <div v-html="article.body"> </div>
-        <div> {{article.created}} </div>
-        <div> {{article.updated}} </div>
-        <div> tags: <span v-for="tag in article.tags">{{tag.name}}</span> </div>
+    <div class="container">
+        <div class="box"> 
+            <div class="block"> {{article.title}} <span class="tag is-primary is-light" v-for="tag in article.tags">{{tag.name}}</span> </div>
+            <div class="block">
+                <div> 更新時間: {{article.updated}} </div>
+                <div> 発表時間: {{article.created}} </div>
+            </div>
+        </div>
+        <div class="box"> <div class="content" v-html="article.body"> </div> </div>
     </div>
   </div>
 
