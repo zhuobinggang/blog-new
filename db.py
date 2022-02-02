@@ -104,3 +104,12 @@ def compress(text):
 
 def decompress(text):
     return b64d(text)
+
+def init_db():
+    sql = "CREATE TABLE articles (id INTEGER primary key AUTOINCREMENT, title TEXT, body TEXT, created datetime DEFAULT (DATETIME('now', 'localtime')), updated datetime DEFAULT (DATETIME('now', 'localtime')), tags TEXT DEFAULT '')"
+    insert(sql)
+    sql = "CREATE TABLE tags (id INTEGER primary key AUTOINCREMENT, name TEXT not null)"
+    insert(sql)
+    sql = "CREATE TABLE merge_article_tag (id INTEGER primary key AUTOINCREMENT, aid INTEGER not null, tid INTEGER not null)"
+    insert(sql)
+
